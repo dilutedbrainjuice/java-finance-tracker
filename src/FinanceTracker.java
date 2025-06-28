@@ -1,9 +1,12 @@
 import java.util.Scanner;
+
+import javax.smartcardio.TerminalFactory;
+
 import java.time.*;
 
 public class FinanceTracker {
 
-    public class Account {
+    public static class Account {
         private int amount;
         private String name;
 
@@ -145,10 +148,18 @@ public class FinanceTracker {
     public static void main(String[] args) throws Exception {
         Scanner scanner = new Scanner(System.in);
         int choice;
+        
+
 
         while(true) {
+            System.out.println("Enter your name:");
+            String username = scanner.nextLine();
+            Account account1 =  new Account(0, username);
+
+
             System.out.println("");
             System.out.println("===== Personal Finance Manager =====");
+            System.out.println("===== WELCOME TERRY =====");
             System.out.println("Please select an option:");
             System.out.println("1. Input Monthly Salary");
             System.out.println("2. Input Monthly Commitment");
@@ -161,9 +172,19 @@ public class FinanceTracker {
             System.out.print("Enter your choice (0-7): ");
 
             choice = scanner.nextInt();
+            
 
             switch (choice) {
-                case value:
+                case 1:
+                    System.out.println("===== Input Monthly Salary =====");
+                    int salary = scanner.nextInt();
+                    System.out.println("===== What is your tax percentage? (%) =====");
+                    int taxPercentage = scanner.nextInt();
+                    LocalDateTime currenDateTime = LocalDateTime.now();
+                    IncomeTransaction income = new IncomeTransaction(salary, username, currenDateTime , taxPercentage);
+                    
+
+
                     
                     break;
             
