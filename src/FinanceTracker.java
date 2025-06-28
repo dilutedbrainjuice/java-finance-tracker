@@ -72,6 +72,68 @@ public class FinanceTracker {
         public void setDateTime (LocalDateTime dateTime) {
             this.dateTime = dateTime;
         }
+
+        public void processTransaction (int accountAmount, int amount) {
+            accountAmount = accountAmount + amount;
+            System.out.println("amount has been updated: " + accountAmount);
+        }
+
+    }
+
+    public class IncomeTransaction extends Transaction {
+
+        private int taxPercentage;
+
+
+
+        public IncomeTransaction(int amount, String description, LocalDateTime dateTime, int taxPercentage){
+            super(amount, description, dateTime);
+            this.taxPercentage = taxPercentage;
+        }
+
+        public double getTax(){
+            return taxPercentage;
+        }
+
+        public void setTax(int taxPercentage){
+            this.taxPercentage = taxPercentage;
+        }
+
+        public int calculateNet (int amount, int taxPercentage){
+            int tax = amount * (taxPercentage / 100);
+            amount = amount - tax;
+
+            return amount;
+
+        }
+
+
+        @Override
+        public void processTransaction (int accountAmount, int amount) {
+            int netAmount = calculateNet(amount, taxPercentage);
+
+            accountAmount = accountAmount + netAmount;
+            System.out.println("Income has been added to account: " + accountAmount);
+        }
+    }
+
+    public class ExpenseTransaction extends Transaction {
+
+        public ExpenseTransaction(int amount, String description, LocalDateTime dateTime){
+            super(amount, description, dateTime);
+        }
+
+        @Override
+        public void processTransaction (int accountAmount, int amount) {
+
+            //check if amount > accountAmount, if yes declined
+            if (amount > accountAmount){
+                System.out.println("Insufficient amount! Your account only has"+accountAmount+" while you need "+amount+"!");
+            } else{
+                accountAmount = accountAmount - amount;
+                System.out.println("Transaction successful!");
+            }
+        }
     }
 
     
